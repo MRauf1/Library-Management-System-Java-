@@ -1,0 +1,23 @@
+Library Management System
+By Rauf Makharov
+
+Version 0.1 Alpha
+-Created Frame class responsible for the GUI
+-Created login panel for the user to login
+-Created signUp panel for the user to sign up
+-Gave functionality to the goBack button to be able to switch in between the 2 panels
+
+Version 0.2 Alpha
+-Created the main menu panel for the user to use the LMS
+-Created SQLite database
+-Added a Student row with different columns to the database
+-Created JavaConnect class responsible for connecting the program to the database
+-Allowed the user to sign up and proceed to the main menu
+-Stores user's info in the database
+
+Version 0.3 Alpha
+-Added a Teacher row with different columns to the database
+-Added a radiobutton in the signUp panel for the user to choose the occupation: student or teacher
+
+Version 0.4 Alpha
+-Separated the frames into different classes to simplify the code
