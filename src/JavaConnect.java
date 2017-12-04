@@ -6,13 +6,9 @@ public class JavaConnect {
 		
 		try {
 			
+			//Connect to the database and return the connection
 			String url = "jdbc:sqlite:library.db";
-			
-			System.out.println("Connecting");
-			
 			Connection conn = DriverManager.getConnection(url);
-			
-			System.out.println("Connected");
 			
 			return conn;
 			

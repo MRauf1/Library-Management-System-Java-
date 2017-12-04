@@ -21,3 +21,30 @@ Version 0.3 Alpha
 
 Version 0.4 Alpha
 -Separated the frames into different classes to simplify the code
+
+Version 0.5 Alpha
+-LogOut button in the main menu will log the user out and take the user to the login screen
+-Added a forgotPassword screen
+-User can retrieve the password by putting in the name and answering the question
+-User can login from the login screen by entering his/her data
+-Added the account frame
+-Added the changePassword frame
+-User can change his/her data
+-Added the book frame
+-Added the option to add books
+-User can view all the books
+-Added the addBooks frame
+-Added the editBooks frame
+-Added the report frame
+-User can change the selected book's data
+-User can add a new book
+-Added comments to explain the functionality
+
+Version 1.0 Beta
+-Improved the GUI
+-Linked the books to user's ID
+-Added the functionality to remove books
+-Added the report frame
+-User can view his/her books from the report frame
+-User can return his/her books from the report frame
+-Added the functionality to check out books
