@@ -169,7 +169,12 @@ public class Report {
 				booksData[i][1] = result.getString(2);
 				booksData[i][2] = result.getString(3);
 				booksData[i][3] = result.getString(4);
+				String daysLeft = daysLeft(result);
 				booksData[i][4] = daysLeft(result) + " days";
+				
+				if(Integer.parseInt(daysLeft) < 0) {
+					
+				}
 				
 				i++;
 				
@@ -245,6 +250,30 @@ public class Report {
 			
 			//Close the database helper
 			result.close();
+			
+			//If it's past the deadline, change the moneyOwed value
+			if(Integer.parseInt(daysLeft) < 0) {
+				
+				//Fetch the money owed data
+				String sql1 = "SELECT * FROM " + Constants.getOccupation() + " WHERE id=" + Constants.getUserID();
+				statement = conn.prepareStatement(sql1);
+				result = statement.executeQuery();
+				
+				//Change the money owed
+				double moneyOwed = Double.parseDouble(result.getString(8));
+				moneyOwed += Math.abs(Double.parseDouble(daysLeft) * 0.1);
+				
+				//Update the money owed
+				String sql2 = "UPDATE " + Constants.getOccupation() + " SET MoneyOwed=? WHERE id=" + Constants.getUserID();
+				statement = conn.prepareStatement(sql2);
+				statement.setString(1, Double.toString(moneyOwed));
+				statement.executeUpdate();
+				
+				//Close the database helper
+				statement.close();
+				result.close();
+				
+			}
 			
 			return daysLeft;
 			
