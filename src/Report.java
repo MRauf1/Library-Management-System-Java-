@@ -169,15 +169,15 @@ public class Report {
 				booksData[i][1] = result.getString(2);
 				booksData[i][2] = result.getString(3);
 				booksData[i][3] = result.getString(4);
-				String daysLeft = daysLeft(result);
-				booksData[i][4] = daysLeft(result) + " days";
-				
-				if(Integer.parseInt(daysLeft) < 0) {
-					
-				}
 				
 				i++;
 				
+			}
+			
+			//Add the deadline info
+			for(int j = 0; j < i; j++) {
+				String daysLeft = daysLeft();
+				booksData[j][4] = daysLeft + " days";
 			}
 			
 			//Close the database helpers
@@ -201,17 +201,26 @@ public class Report {
 	}
 	
 	//Returns the number of days left until the deadline
-	public String daysLeft(ResultSet result) {
+	public String daysLeft() {
 		
 		//Gets the user's occupation
 		String occupation = Constants.getOccupation();
+		String sqlOccupation = occupation.equals("Student") ? "StudentID" : "TeacherID";
 		
 		try {
+			
+			//Fetch the data about user's books
+			String sql = "SELECT * FROM Books WHERE " + sqlOccupation + "=?";
+			PreparedStatement statement1 = conn.prepareStatement(sql);
+			
+			statement1.setString(1, Constants.getUserID());
+			
+			ResultSet result1 = statement1.executeQuery();
 			
 			int deadline = occupation == "Student" ? 7 : 14;
 			
 			//Get info about the date when the book was checked out
-			String oldDate = result.getString(7);
+			String oldDate = result1.getString(7);
 			String[] oldDateArray = oldDate.split(" ");
 			String oldMonth = oldDateArray[1];
 			int oldDay = Integer.parseInt(oldDateArray[2]);
@@ -249,15 +258,16 @@ public class Report {
 			}
 			
 			//Close the database helper
-			result.close();
+			statement1.close();
+			result1.close();
 			
 			//If it's past the deadline, change the moneyOwed value
 			if(Integer.parseInt(daysLeft) < 0) {
 				
 				//Fetch the money owed data
 				String sql1 = "SELECT * FROM " + Constants.getOccupation() + " WHERE id=" + Constants.getUserID();
-				statement = conn.prepareStatement(sql1);
-				result = statement.executeQuery();
+				PreparedStatement statement = conn.prepareStatement(sql1);
+				ResultSet result = statement.executeQuery();
 				
 				//Change the money owed
 				double moneyOwed = Double.parseDouble(result.getString(8));
@@ -299,7 +309,7 @@ public class Report {
 			
 			//Remove the link between the current user's ID and the selected book
 			String sql = "UPDATE Books SET " + sqlOccupation + "=? WHERE id=?";
-			statement = conn.prepareStatement(sql);
+			PreparedStatement statement = conn.prepareStatement(sql);
 			
 			statement.setString(1, null);
 			statement.setString(2, bookID);
