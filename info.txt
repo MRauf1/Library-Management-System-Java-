@@ -48,3 +48,7 @@ Version 1.0 Beta
 -User can view his/her books from the report frame
 -User can return his/her books from the report frame
 -Added the functionality to check out books
+
+Version 1.1 Beta
+-Added the deadlines and the amount of days left to return the book
+-If the book is not returned in time, the user will start owning money to the library
